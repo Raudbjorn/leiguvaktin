@@ -1,0 +1,11 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Services
+GET        /apartments/        controllers.MblController.getAll
+
+# Map static resources from the /public folder to the /assets URL path
+
+
+    

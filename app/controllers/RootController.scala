@@ -30,6 +30,8 @@ class RootController extends Controller with Scraper {
       visir <- visirProcess
     } yield mbl ++ visir
 
+
+    //TODO: blocking code, will fix later
     val result = Await.result(future, Duration.Inf)
 
     Ok(Json.obj("Apartments" -> result))

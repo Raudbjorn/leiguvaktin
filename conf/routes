@@ -3,7 +3,9 @@
 # ~~~~
 
 # Services
-GET        /apartments/        controllers.MblController.getAll
+GET        /apartments/mbl          controllers.MblController.scrape
+GET        /apartments/visir        controllers.VisirController.scrape
+GET        /apartments/             controllers.RootController.scrape
 
 # Map static resources from the /public folder to the /assets URL path
 

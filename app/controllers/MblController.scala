@@ -11,7 +11,7 @@ import services.{Apartment, MblScraper, Scraper}
   */
 class MblController extends Controller with Scraper {
 
-  def getAll = Action {
+  def scrape = Action {
     implicit val apartmentFormat = Json.format[Apartment]
     Ok(Json.obj("Apartments" -> MblScraper.scrape()))
   }

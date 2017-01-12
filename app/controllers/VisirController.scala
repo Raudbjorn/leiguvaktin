@@ -6,7 +6,7 @@ import play.api.mvc._
 import services.{Apartment, MblScraper, Scraper, VisirScraper}
 
 /**
-  * Created by erept on 11.1.2017.
+  * Created by sveinbjorn on 11.1.2017.
   */
 class VisirController extends Controller with Scraper {
   def scrape = Action {

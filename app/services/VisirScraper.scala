@@ -6,11 +6,11 @@ import net.ruippeixotog.scalascraper.model.{Document, Element}
 import net.ruippeixotog.scalascraper.scraper.ContentExtractors.elementList
 
 /**
-  * Created by erept on 11.1.2017.
+  * Created by sveinbjorn on 11.1.2017.
   */
 object VisirScraper extends Scraper {
 
-  val getPage: Int => Document = pageNo => browser.get(s"http://fasteignir.visir.is/ajaxsearch/getresults?stype=rent&itemcount=60&page=$pageNo")
+  val getPage: Int => Document = pageNo => getPage(s"http://fasteignir.visir.is/ajaxsearch/getresults?stype=rent&itemcount=60&page=$pageNo")
   val zipRegex = ", [0-9]{3}".r
   val searchIdRegex = "search_id=[0-9]*"
   val roomsRegex = "[0-9]* herb.".r

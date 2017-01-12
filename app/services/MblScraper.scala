@@ -14,7 +14,7 @@ object MblScraper extends Scraper {
   val zipRegex = ", [0-9]{3}".r
   val roomRegex = "[0-9]* herbergi".r
   val sizeRegex = "[0-9]* fm".r
-  val getPage: Int => Document = pageNo => browser.get(s"http://www.mbl.is/fasteignir/leiga/leit/?page=$pageNo&type=&min_rooms=&max_rooms=&min_price=&max_price=&text_query=")
+  val getPage: Int => Document = pageNo => getPage(s"http://www.mbl.is/fasteignir/leiga/leit/?page=$pageNo&type=&min_rooms=&max_rooms=&min_price=&max_price=&text_query=")
 
   val parseApartment: Element => Apartment = info => {
     val dirtyAddress = info >> element(".rental-itemlist-headline")

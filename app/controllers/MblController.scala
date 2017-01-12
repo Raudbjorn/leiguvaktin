@@ -7,7 +7,7 @@ import services.{Apartment, MblScraper, Scraper}
 
 
 /**
-  * Created by erept on 10.1.2017.
+  * Created by sveinbjorn on 10.1.2017.
   */
 class MblController extends Controller with Scraper {
 

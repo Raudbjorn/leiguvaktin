@@ -29,11 +29,17 @@ class RootController extends Controller with Scraper {
       BlandScraper.scrape()
     }
 
+    val leigaProcess: Future[List[Apartment]] = Future {
+      LeigaIsScraper.scrape()
+    }
+
+
     val future = for {
       mbl <- mblProcess
       visir <- visirProcess
       bland <- blandProcess
-    } yield mbl ++ visir ++ bland
+      leiga <- leigaProcess
+    } yield mbl ++ visir ++ bland ++ leiga
 
 
     //TODO: blocking code, will fix later

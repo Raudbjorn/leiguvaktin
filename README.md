@@ -1,6 +1,6 @@
 # leiguvaktin
 
-A Play Framework(2.5.*) project.
+An experimental pet project that aims to wrap live data on apartments for rent in Iceland from multiple different sources in to one API.
 
 
 ## Supported sites

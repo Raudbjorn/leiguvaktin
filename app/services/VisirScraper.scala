@@ -10,11 +10,11 @@ import net.ruippeixotog.scalascraper.scraper.ContentExtractors.elementList
   */
 object VisirScraper extends Scraper {
 
-  val getPage: Int => Document = pageNo => getPage(s"http://fasteignir.visir.is/ajaxsearch/getresults?stype=rent&itemcount=60&page=$pageNo")
-  val zipRegex = ", [0-9]{3}".r
-  val searchIdRegex = "search_id=[0-9]*"
-  val roomsRegex = "[0-9]* herb.".r
-  val sizeRegex = "[0-9]* m²".r
+  private val getPage: Int => Document = pageNo => getPage(s"http://fasteignir.visir.is/ajaxsearch/getresults?stype=rent&itemcount=60&page=$pageNo")
+  private val zipRegex = ", [0-9]{3}".r
+  private val searchIdRegex = "search_id=[0-9]*"
+  private val roomsRegex = "[0-9]* herb.".r
+  private val sizeRegex = "[0-9]* m²".r
 
   val parseApartment: Element => Apartment = info => {
     val dirtyAddress = info >> element("h2") >> text("a")

@@ -10,11 +10,10 @@ import net.ruippeixotog.scalascraper.model.{Document, Element}
   * Created by sg on 10.1.2017.
   */
 object MblScraper extends Scraper {
-  val url = "http://www.mbl.is/fasteignir/leiga/leit/?type=&min_rooms=&max_rooms=&min_price=&max_price=&text_query="
-  val zipRegex = ", [0-9]{3}".r
-  val roomRegex = "[0-9]* herbergi".r
-  val sizeRegex = "[0-9]* fm".r
-  val getPage: Int => Document = pageNo => getPage(s"http://www.mbl.is/fasteignir/leiga/leit/?page=$pageNo&type=&min_rooms=&max_rooms=&min_price=&max_price=&text_query=")
+  private val zipRegex = ", [0-9]{3}".r
+  private val roomRegex = "[0-9]* herbergi".r
+  private val sizeRegex = "[0-9]* fm".r
+  private  val getPage: Int => Document = pageNo => getPage(s"http://www.mbl.is/fasteignir/leiga/leit/?page=$pageNo&type=&min_rooms=&max_rooms=&min_price=&max_price=&text_query=")
 
   val parseApartment: Element => Apartment = info => {
     val dirtyAddress = info >> element(".rental-itemlist-headline")

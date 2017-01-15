@@ -8,9 +8,8 @@ import net.ruippeixotog.scalascraper.model.{Document, Element}
   * Created by sveinbjorn on 12.1.2017.
   */
 object BlandScraper extends Scraper {
-  val url = "https://bland.is/classified/?categoryId=59&sub=1&sortby=latest&size=200&page=1"
-  val getPage: Int => Document = pageNo => getPage(s"https://bland.is/classified/?categoryId=59&sub=1&sortby=latest&size=200&page=$pageNo")
-  val zipRegex = "[0-9]{3} ".r
+  private val getPage: Int => Document = pageNo => getPage(s"https://bland.is/classified/?categoryId=59&sub=1&sortby=latest&size=200&page=$pageNo")
+  private val zipRegex = "[0-9]{3} ".r
 
   val parseApartment: Element => Apartment = info => {
     val address = info >> text("h3")

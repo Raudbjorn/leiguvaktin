@@ -3,6 +3,7 @@ package services
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.model.{Document, Element}
+import services.Apartment._
 
 /**
   * Created by sveinbjorn on 14.1.2017.

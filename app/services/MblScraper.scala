@@ -1,10 +1,9 @@
 package services
 
-import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
-import net.ruippeixotog.scalascraper.dsl.DSL.Parse._
-import scala.util.matching.Regex
+import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.model.{Document, Element}
+import services.Apartment._
 
 /**
   * Created by sg on 10.1.2017.
@@ -13,7 +12,7 @@ object MblScraper extends Scraper {
   private val zipRegex = ", [0-9]{3}".r
   private val roomRegex = "[0-9]* herbergi".r
   private val sizeRegex = "[0-9]* fm".r
-  private  val getPage: Int => Document = pageNo => getPage(s"http://www.mbl.is/fasteignir/leiga/leit/?page=$pageNo&type=&min_rooms=&max_rooms=&min_price=&max_price=&text_query=")
+  private val getPage: Int => Document = pageNo => getPage(s"http://www.mbl.is/fasteignir/leiga/leit/?page=$pageNo&type=&min_rooms=&max_rooms=&min_price=&max_price=&text_query=")
 
   val parseApartment: Element => Apartment = info => {
     val dirtyAddress = info >> element(".rental-itemlist-headline")

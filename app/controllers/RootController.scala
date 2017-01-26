@@ -14,7 +14,6 @@ import scala.concurrent.{Await, Future}
 class RootController extends Controller with Scraper {
 
   def scrape = Action {
-    implicit val apartmentFormat = Json.format[Apartment]
     implicit val baseTime = System.currentTimeMillis
 
     val mblProcess: Future[List[Apartment]] = Future {

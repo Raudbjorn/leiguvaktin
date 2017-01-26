@@ -1,9 +1,8 @@
 package controllers
 
-import play.api.mvc.Action
 import play.api.libs.json._
-import play.api.mvc._
-import services.{Apartment, MblScraper, Scraper}
+import play.api.mvc.{Action, _}
+import services.{MblScraper, Scraper}
 
 
 /**
@@ -12,7 +11,6 @@ import services.{Apartment, MblScraper, Scraper}
 class MblController extends Controller with Scraper {
 
   def scrape = Action {
-    implicit val apartmentFormat = Json.format[Apartment]
     Ok(Json.obj("Apartments" -> MblScraper.scrape()))
   }
 }

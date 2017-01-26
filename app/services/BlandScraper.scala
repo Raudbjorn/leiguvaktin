@@ -1,9 +1,8 @@
 package services
 
-import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
+import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.model.{Document, Element}
-
 /**
   * Created by sveinbjorn on 12.1.2017.
   */

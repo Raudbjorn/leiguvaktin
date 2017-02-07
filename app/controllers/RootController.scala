@@ -5,50 +5,24 @@ import play.api.mvc.{Action, Controller}
 import services._
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 
 /**
   * Created by sveinbjorn on 11.1.2017.
   */
 class RootController extends Controller with Scraper {
 
-  def scrape = Action {
+  def scrape = Action.async {
     implicit val baseTime = System.currentTimeMillis
 
-    val mblProcess: Future[List[Apartment]] = Future {
-      MblScraper.scrape()
-    }
-
-    val visirProcess: Future[List[Apartment]] = Future {
-      VisirScraper.scrape()
-    }
-
-    val blandProcess: Future[List[Apartment]] = Future {
-      BlandScraper.scrape()
-    }
-
-    val leigaProcess: Future[List[Apartment]] = Future {
-      LeigaIsScraper.scrape()
-    }
-
-    val leiguListinnProcess: Future[List[Apartment]] = Future {
-      LeigulistinnScraper.scrape()
-    }
-
-
-    val future = for {
-      mbl <- mblProcess
-      visir <- visirProcess
-      bland <- blandProcess
-      leiga <- leigaProcess
-      leiguListinn <- leiguListinnProcess
+    val result = for {
+      mbl <- Future(MblScraper.scrape())
+      visir <-  Future(VisirScraper.scrape())
+      bland <- Future(BlandScraper.scrape())
+      leiga <- Future(LeigaIsScraper.scrape())
+      leiguListinn <- Future(LeigulistinnScraper.scrape())
     } yield mbl ++ visir ++ bland ++ leiga ++ leiguListinn
 
-
-    //TODO: blocking code, will fix later
-    val result = Await.result(future, Duration.Inf)
-
-    Ok(Json.obj("Apartments" -> result))
+    result.map(r => Ok(Json.obj("Apartments" -> r)))
   }
 }

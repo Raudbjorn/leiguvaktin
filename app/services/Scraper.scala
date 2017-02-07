@@ -10,14 +10,25 @@ import org.jsoup.Jsoup
 trait Scraper {
   val browser = JsoupBrowser()
 
+  def retry[T](n: Int)(fn: => T): T = {
+    try {
+      fn
+    } catch {
+      case e if n > 1 => {
+        Thread.sleep(100)
+        retry(n - 1)(fn)
+      }
+    }
+  }
+
   def getPage(url: String): Document = {
-    browser.requestSettings(Jsoup.connect(url)
+    retry(5) {
+    browser.parseString(browser.requestSettings(Jsoup.connect(url)
       .ignoreContentType(true)
       .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
       .referrer("http://www.google.com")
-      .timeout(120000)
-      .followRedirects(true))
-
-    browser.get(url)
+      .timeout(1200000)
+      .followRedirects(true)).get().html())
+    }
   }
 }

@@ -10,6 +10,7 @@ import scala.util.Try
   */
 object Apartment {
 
+
   class Rooms(val roomsStr: String) extends AnyVal {
     def format(): Int = Try(roomsStr.toInt).toOption.getOrElse(0)
 
@@ -34,6 +35,7 @@ object Apartment {
       formatString.trim.toLowerCase
         .replace(".", "")
         .replace(" þús", "000")
+        .replaceAll("-.*$", "")
         .replaceAll("[^0-9.]", "")
     }
 

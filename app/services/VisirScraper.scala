@@ -18,21 +18,17 @@ object VisirScraper extends Scraper {
   private val sizeRegex = "[0-9]* m²".r
 
   val parseApartment: Element => Apartment = info => {
-    val dirtyAddress = info >> element("h2") >> text("a")
-    val address = dirtyAddress.takeWhile(c => c != ',')
-    val zip = zipRegex.findFirstIn(dirtyAddress).getOrElse("?").replace(", ", "")
-
-    val details = info >> element(".b-products-item-details-param")
-    val rooms = roomsRegex.findFirstIn(details >> text("table")).getOrElse("?").replace(" herb.", "")
-    val size = sizeRegex.findFirstIn(details >> text("table")).getOrElse("?").replace(" m²", "")
-
-    val link = "http://fasteignir.visir.is" + (info >> element("h2") >> attr("href")("a")).replaceAll(searchIdRegex, "")
-    val price = info >> element("tbody") >> element("tr") >> element("td") >> text("strong")
+    val address = (info >?> element(".property__title") >> element("h2") >> text("a")).getOrElse("")
+    val zip = (info >?> text(".property__postalcode")).getOrElse("").trim.takeWhile(_.isDigit)
+    val rooms = (info >?> text(".property__arrangement")).getOrElse("").trim.takeWhile(_.isDigit)
+    val size = (info >?> text(".property__size")).getOrElse("").trim.takeWhile(_.isDigit)
+    val price = (info >?> text(".property__price")).getOrElse("").trim
+    val link = "http://fasteignir.visir.is" + (info >?> element(".property__title") >> element("h2") >> attr("href")("a")).getOrElse("").replaceAll(searchIdRegex, "")
     Apartment(address, zip, rooms, size, price, link)
   }
 
   def scrape(): List[Apartment] = {
-    Stream.from(1).map(getPage).map(d => d >> elementList(".b-products-item-details")).takeWhile(_.nonEmpty)
+    Stream.from(1).map(getPage).map(d => d >> elementList(".property__inner")).takeWhile(_.nonEmpty)
       .flatten.map(e => parseApartment(e)).toList
   }
 
